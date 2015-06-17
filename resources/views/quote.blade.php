@@ -18,16 +18,40 @@
 @else
     <body style="background-image: url('https://unsplash.it/2000/1000/?random')">
 @endif
-<div class="container">  
+<div class="container">
     <div class="quote-container">
-        <p class="text">{{$quote->text}}</p>
+    <div class="row">
+        <div class="col s2">
+            
+                <a class="btn-like right btn-floating btn-large waves-effect waves-blue-lighten-2 btn-flat">
+                    <i class="mdi-action-thumb-up"></i>
+                </a>
+            
+        </div>
+        <div class="col s8">
+            <p class="text">
+                {{$quote->text}}
+            </p>
+        </div>
+        <div class="col s2">
+            
+                <a class="btn-unlike left btn-floating btn-large waves-effect waves-red-darken-2 btn-flat">
+                    <i class="mdi-action-thumb-down"></i>
+                </a>
+            
+        </div>
+    </div>
+        
+        
+        
+        
         <p class="author">— {{$quote->author}}</p>
     </div>
-    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-    	<a href="/new" class="btn-floating btn-large green">
-    		<i class="large mdi-editor-format-quote"></i>
-    	</a>
-	</div>
 </div>  
+<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+    <a href="/new" class="btn-floating btn-large blue">
+        <i class="large mdi-editor-format-quote"></i>
+    </a>
+</div>
 </body>  
 </html>  

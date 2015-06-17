@@ -1,3 +1,11 @@
+.btn-unlike:hover {
+    background-color: #ef5350 !important;
+}
+
+.btn-like:hover {
+    background-color: #4caf50 !important;
+}
+
 html, body {  
     height: 100%;
     padding: 0;
