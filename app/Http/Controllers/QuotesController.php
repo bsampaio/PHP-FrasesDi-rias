@@ -8,17 +8,8 @@ use Illuminate\Http\Request;
 
 class QuotesController extends Controller{
 
-	public function home(){
-		/*
-	     * Picks a different quote every day 
-	     * (for a maximum of 366 quotes)
-	     *
-	     *   - $count: the total number of available quotes
-	     *   - $day: the current day of the year (from 0 to 365)
-	     *   - $page: the page to look for to retrieve the 
-	     *            correct record
-     	*/
-	    $count = Quote::query()->get()->count();
+	private function getRandomQuote(){
+		$count = Quote::query()->get()->count();
 	    $page = rand(1,$count);
 
 	    $quotes = Quote::query()->get()->forPage($page, 1)->all();
@@ -29,7 +20,22 @@ class QuotesController extends Controller{
 	        $quotes[0]->text = 'Sorry dude, there are no quotes :(';
 	    }
 
-	    return view('quote', ['quote' => $quotes[0]]);
+	    return $quotes[0];
+	}
+
+	public function home(){
+		/*
+	     * Picks a different quote every day 
+	     * (for a maximum of 366 quotes)
+	     *
+	     *   - $count: the total number of available quotes
+	     *   - $day: the current day of the year (from 0 to 365)
+	     *   - $page: the page to look for to retrieve the 
+	     *            correct record
+     	*/
+	    $quote = $this->getRandomQuote();
+
+	    return view('quote', ['quote' => $quote]);
 	}
 
 	public function save(Request $request){
@@ -61,5 +67,11 @@ class QuotesController extends Controller{
 		$quote->score -= 1;
 		$quote->save();
 		return redirect()->route('home');	
+	}
+
+	public function iframe(){
+		$quote = $this->getRandomQuote();
+
+	    return view('iframe', ['quote' => $quote]);
 	}
 }
