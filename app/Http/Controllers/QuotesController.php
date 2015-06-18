@@ -52,14 +52,14 @@ class QuotesController extends Controller{
 	    $quote->author = $request->author;
 	    $quote->text = $request->text;
 	    $quote->save();
-	    return redirect()->route('home');
+	    return redirect()->back();
 	}
 
 	public function up($id){
 		$quote = Quote::find($id);
 		$quote->score += 1;
 		$quote->save();
-		return redirect()->route('home');
+		return redirect()->back();
 	}
 
 	public function down($id){
