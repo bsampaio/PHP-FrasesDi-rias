@@ -23,11 +23,13 @@ $app->get('/view/{id}', function($id) use ($app) {
     return view('quote', ['quote' => $quote]);
 });
 
+/*Returns an iframe page*/
+$app->get('/iframe', ['uses' => 'App\Http\Controllers\QuotesController@iframe','as' => 'iframe']);
+
 $app->get('/new', ['as' => 'new',function() use($app) {
     return view('new');
 }]);
 
 $app->post('/new', ['uses' => 'App\Http\Controllers\QuotesController@save','as' => 'save']);
-
 $app->post('/up/{id}', ['uses' => 'App\Http\Controllers\QuotesController@up', 'as' => 'up']);
 $app->post('/down/{id}', ['uses' => 'App\Http\Controllers\QuotesController@down', 'as' => 'down']);
