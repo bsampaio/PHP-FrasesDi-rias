@@ -1,7 +1,7 @@
 <html>  
 <head> 
 	<meta charset="utf-8"> 
-    <title>Motivational — Your daily source of motivation!</title>
+    <title>Guracle — Your daily source of motivation!</title>
     
     <link href='http://fonts.googleapis.com/css?family=Alegreya:400,700|Roboto+Condensed' rel='stylesheet' type='text/css'>
     <!-- Compiled and minified CSS -->
@@ -19,37 +19,43 @@
     <body style="background-image: url('https://unsplash.it/2000/1000/?random')">
 @endif
 <div class="container">
+    @if (!empty($quote->id))
+        <span class="right badge" style="margin-top: 1%; color:white; text-shadow: 1px 1px 1px rgba(150, 150, 150, 0.8); font-size: 1.2em">Score: {{$quote->score}}</span>
+    @endif        
     <div class="quote-container">
-    <div class="row">
-        <div class="col s2">
-            
-                <a class="btn-like right btn-floating btn-large waves-effect waves-blue-lighten-2 btn-flat">
-                    <i class="mdi-action-thumb-up"></i>
-                </a>
-            
+        <div class="row">
+            <div class="col s2">
+                @if (!empty($quote->id))
+                    <form action="/down/{{$quote->id}}" method="POST">
+                        <button class="btn-unlike right btn-floating btn-large waves-effect waves-red-darken-2 btn-flat">
+                            <i class="mdi-action-thumb-down"></i>
+                        </button>
+                    </form>
+                @else
+                    &nbsp;
+                @endif
+            </div>
+            <div class="col s8">
+                <p class="text">
+                    {{$quote->text}}
+                </p>
+            </div>
+            <div class="col s2">
+            @if (!empty($quote->id))
+                <form action="/up/{{$quote->id}}" method="POST">
+                    <button class="btn-like left btn-floating btn-large waves-effect waves-blue-lighten-2 btn-flat">
+                        <i class="mdi-action-thumb-up"></i>
+                    </button>
+                </form>
+            @endif
+            </div>
         </div>
-        <div class="col s8">
-            <p class="text">
-                {{$quote->text}}
-            </p>
-        </div>
-        <div class="col s2">
-            
-                <a class="btn-unlike left btn-floating btn-large waves-effect waves-red-darken-2 btn-flat">
-                    <i class="mdi-action-thumb-down"></i>
-                </a>
-            
-        </div>
-    </div>
-        
-        
-        
-        
         <p class="author">— {{$quote->author}}</p>
     </div>
 </div>  
 <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-    <a href="/new" class="btn-floating btn-large blue">
+    <a href="/new" class="btn-floating btn-large blue tooltipped"
+       data-position="top" data-delay="30" data-tooltip="New quote">
         <i class="large mdi-editor-format-quote"></i>
     </a>
 </div>

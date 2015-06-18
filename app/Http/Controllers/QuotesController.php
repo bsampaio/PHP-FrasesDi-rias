@@ -24,7 +24,9 @@ class QuotesController extends Controller{
 	    $quotes = Quote::query()->get()->forPage($page, 1)->all();
 
 	    if (empty($quotes)) {
-	        throw new \Illuminate\Database\Eloquent\ModelNotFoundException();
+	        $quotes[0] = new Quote();
+	        $quotes[0]->author = 'Guracle';
+	        $quotes[0]->text = 'Sorry dude, there are no quotes :(';
 	    }
 
 	    return view('quote', ['quote' => $quotes[0]]);
@@ -45,5 +47,19 @@ class QuotesController extends Controller{
 	    $quote->text = $request->text;
 	    $quote->save();
 	    return redirect()->route('home');
+	}
+
+	public function up($id){
+		$quote = Quote::find($id);
+		$quote->score += 1;
+		$quote->save();
+		return redirect()->route('home');
+	}
+
+	public function down($id){
+		$quote = Quote::find($id);
+		$quote->score -= 1;
+		$quote->save();
+		return redirect()->route('home');	
 	}
 }
