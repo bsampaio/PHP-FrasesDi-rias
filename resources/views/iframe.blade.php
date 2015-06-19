@@ -12,6 +12,10 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
 
 	<link href="/css/style.css" rel="stylesheet" type="text/css"/>
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    
     <style type="text/css">
         .container {
             overflow-x: hidden;
@@ -34,9 +38,7 @@
     </style>
 </head>  
 @if (!empty($quote->background))
-<body style="background-image: url('/img/{{$quote->background}}')"> 
-@else
-<body style="background-image: url('https://unsplash.it/520/400/?random')">
+    <body style="background-image: url('/img/{{$quote->background}}')"> 
 @endif
     <div class="container">
         <div class="row">
@@ -80,6 +82,15 @@
                 @endif
             </div>
         </div>
-    </div>  
+    </div>
+    <script type="text/javascript">
+        var w = window,
+            d = document,
+            e = d.documentElement,
+            g = d.getElementsByTagName('body')[0],
+            width = w.innerWidth || e.clientWidth || g.clientWidth,
+            height = w.innerHeight|| e.clientHeight|| g.clientHeight;
+        d.body.style.backgroundImage = "url('https://unsplash.it/"+width+"/"+height+"/?random')";
+    </script>
 </body>  
 </html>  
