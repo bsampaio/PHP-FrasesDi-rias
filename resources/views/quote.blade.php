@@ -53,7 +53,13 @@
             </div>
             <p class="author">— {{$quote->author}}</p>
         </div>
-    </div>  
+    </div>
+    <div class="fixed-action-btn" style="bottom: 45px; left: 24px;">
+        <a href="/randomize/{{$quote->id}}" class="btn-floating btn-large blue tooltipped"
+           data-position="top" data-delay="30" data-tooltip="Randomize">
+            <i class="large mdi-av-shuffle"></i>
+        </a>
+    </div>
     <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
         <a href="/new" class="btn-floating btn-large blue tooltipped"
            data-position="top" data-delay="30" data-tooltip="New quote">

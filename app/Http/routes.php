@@ -25,6 +25,7 @@ $app->get('/view/{id}', function($id) use ($app) {
 
 /*Returns an iframe page*/
 $app->get('/iframe', ['uses' => 'App\Http\Controllers\QuotesController@iframe','as' => 'iframe']);
+$app->get('/randomize/{id}', ['uses' => 'App\Http\Controllers\QuotesController@randomize','as' => 'randomize']);
 
 $app->get('/new', ['as' => 'new',function() use($app) {
     return view('new');

@@ -8,7 +8,18 @@ use Illuminate\Http\Request;
 
 class QuotesController extends Controller{
 
-	private function getRandomQuote(){
+	private function getRandomQuoteExcept($id){
+		$count = Quote::query()->get()->count();
+		$page = rand(1,$count);
+		$quote = Quote::query()->where('id','<>',$id)->get()->forPage($page, 1)->all();
+		return $quote[0];
+	}
+
+	private function getRandomQuote($except = null){
+		if($except){
+			return $this->getRandomQuoteExcept($except);
+		}
+
 		$count = Quote::query()->get()->count();
 	    $page = rand(1,$count);
 
@@ -73,5 +84,10 @@ class QuotesController extends Controller{
 		$quote = $this->getRandomQuote();
 
 	    return view('iframe', ['quote' => $quote]);
+	}
+
+	public function randomize($id){
+		$quote = $this->getRandomQuote($id);
+		return view('quote', ['quote' => $quote]);
 	}
 }

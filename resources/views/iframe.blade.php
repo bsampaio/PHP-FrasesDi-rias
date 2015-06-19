@@ -15,7 +15,7 @@
 
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    
+
     <style type="text/css">
         .container {
             overflow-x: hidden;
@@ -90,6 +90,8 @@
             g = d.getElementsByTagName('body')[0],
             width = w.innerWidth || e.clientWidth || g.clientWidth,
             height = w.innerHeight|| e.clientHeight|| g.clientHeight;
+            width = width / 2.0;
+            height = height / 2.0;
         d.body.style.backgroundImage = "url('https://unsplash.it/"+width+"/"+height+"/?random')";
     </script>
 </body>  
