@@ -34,3 +34,4 @@ $app->get('/new', ['as' => 'new',function() use($app) {
 $app->post('/new', ['uses' => 'App\Http\Controllers\QuotesController@save','as' => 'save']);
 $app->post('/up/{id}', ['uses' => 'App\Http\Controllers\QuotesController@up', 'as' => 'up']);
 $app->post('/down/{id}', ['uses' => 'App\Http\Controllers\QuotesController@down', 'as' => 'down']);
+$app->get('/caranaotentaessaurl/', ['uses' => 'App\Http\Controllers\QuotesController@getIdList']);

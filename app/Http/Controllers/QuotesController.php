@@ -8,30 +8,31 @@ use Illuminate\Http\Request;
 
 class QuotesController extends Controller{
 
-	private function getRandomQuoteExcept($id){
-		$count = Quote::query()->get()->count();
-		$page = rand(1,$count);
-		$quote = Quote::query()->where('id','<>',$id)->get()->forPage($page, 1)->all();
-		return $quote[0];
+	private function getIdList(){
+		$idList = Quote::lists('id');
+		return $idList;
+	}
+
+	private function getRandomId($except = null){
+		$idList = collect($this->getIdList());
+		if($except){
+			$idList->push($except);
+		}
+		
+		return collect($idList)->random();
 	}
 
 	private function getRandomQuote($except = null){
-		if($except){
-			return $this->getRandomQuoteExcept($except);
-		}
+		$id = $this->getRandomId($except);
+		$quote = Quote::findOrFail($id);
 
-		$count = Quote::query()->get()->count();
-	    $page = rand(1,$count);
-
-	    $quotes = Quote::query()->get()->forPage($page, 1)->all();
-
-	    if (empty($quotes)) {
-	        $quotes[0] = new Quote();
-	        $quotes[0]->author = 'Guracle';
-	        $quotes[0]->text = 'Sorry dude, there are no quotes :(';
+	    if (empty($quote)) {
+	        $quote = new Quote();
+	        $quote->author = 'Guracle';
+	        $quote->text = 'Sorry dude, there are no quotes :(';
 	    }
 
-	    return $quotes[0];
+	    return $quote;
 	}
 
 	public function home(){
@@ -45,7 +46,6 @@ class QuotesController extends Controller{
 	     *            correct record
      	*/
 	    $quote = $this->getRandomQuote();
-
 	    return view('quote', ['quote' => $quote]);
 	}
 
