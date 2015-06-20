@@ -89,6 +89,6 @@ class QuotesController extends Controller{
 
 	public function randomize($id){
 		$quote = $this->getRandomQuote($id);
-		return view('quote', ['quote' => $quote]);
+		return view('materialize', ['quote' => $quote]);
 	}
 }
