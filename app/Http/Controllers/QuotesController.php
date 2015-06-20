@@ -46,7 +46,8 @@ class QuotesController extends Controller{
 	     *            correct record
      	*/
 	    $quote = $this->getRandomQuote();
-	    return view('quote', ['quote' => $quote]);
+	    //return view('materialize', ['quote' => $quote]);
+	    return view('materialize', ['quote' => $quote]);
 	}
 
 	public function save(Request $request){
