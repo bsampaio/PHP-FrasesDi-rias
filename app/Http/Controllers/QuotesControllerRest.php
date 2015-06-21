@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Quote;
 use Illuminate\Http\Request;
 
-class QuotesController extends Controller{
+class QuotesControllerRest extends Controller{
 
 	private function getIdList(){
 		$idList = Quote::lists('id');
@@ -35,10 +35,6 @@ class QuotesController extends Controller{
 	    return $quote;
 	}
 
-	public function home(){
-	    $quote = $this->getRandomQuote();
-	    return view('materialize', ['quote' => $quote]);
-	}
 
 	public function save(Request $request){
 		$validator = Validator::make($request->all(), [
@@ -54,35 +50,36 @@ class QuotesController extends Controller{
 	    $quote->author = $request->author;
 	    $quote->text = $request->text;
 	    $quote->save();
-	    return redirect()->route('home');
-	}
-
-	public function loadNew(){
-		return view('new');
+	    return randomize($id);
 	}
 
 	public function up($id){
 		$quote = Quote::find($id);
 		$quote->score += 1;
 		$quote->save();
-		return redirect()->back();
+		$response = [
+			'code' => 201,
+			'status' => 'success',
+			'message' => 'Vote computed, Thanks!'
+		];
+		return response()->json($response, $response['code']);
 	}
 
 	public function down($id){
 		$quote = Quote::find($id);
 		$quote->score -= 1;
 		$quote->save();
-		return redirect()->back();	
+		$response = [
+			'code' => 201,
+			'status' => 'success',
+			'message' => 'Vote computed, Thanks!'
+		];
+		return response()->json($response, $response['code']);	
 	}
 
-	public function iframe(){
-		$quote = $this->getRandomQuote();
-
-	    return view('iframe', ['quote' => $quote]);
-	}
-
-	public function randomize($id){
+	public function randomize($id = null){
 		$quote = $this->getRandomQuote($id);
-		return view('materialize', ['quote' => $quote]);
+
+		return $quote;
 	}
 }

@@ -23,15 +23,28 @@ $app->get('/view/{id}', function($id) use ($app) {
     return view('quote', ['quote' => $quote]);
 });
 
-/*Returns an iframe page*/
+function rest($path, $controller){
+	global $app;
+
+	$app->get($path.'/randomize', $controller.'@randomize');
+	$app->get($path.'/randomize/{id}', $controller.'@randomize');
+	$app->post($path.'/up/{id}', $controller.'@up');
+	$app->post($path.'/down/{id}', $controller.'@up');
+}
+
+rest('/rest','App\Http\Controllers\QuotesControllerRest');
+
+/**
+ * Get routes
+ */
 $app->get('/iframe', ['uses' => 'App\Http\Controllers\QuotesController@iframe','as' => 'iframe']);
 $app->get('/randomize/{id}', ['uses' => 'App\Http\Controllers\QuotesController@randomize','as' => 'randomize']);
+$app->get('/new', ['uses' => 'App\Http\Controllers\QuotesController@loadNew','as' => 'new']);
 
-$app->get('/new', ['as' => 'new',function() use($app) {
-    return view('new');
-}]);
+/**
+ * Post routes
+ */
 
 $app->post('/new', ['uses' => 'App\Http\Controllers\QuotesController@save','as' => 'save']);
 $app->post('/up/{id}', ['uses' => 'App\Http\Controllers\QuotesController@up', 'as' => 'up']);
 $app->post('/down/{id}', ['uses' => 'App\Http\Controllers\QuotesController@down', 'as' => 'down']);
-$app->get('/caranaotentaessaurl/', ['uses' => 'App\Http\Controllers\QuotesController@getIdList']);

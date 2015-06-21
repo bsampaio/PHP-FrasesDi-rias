@@ -60,6 +60,7 @@ $app->singleton(
       //'Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse',
       'Illuminate\Session\Middleware\StartSession',
       'Illuminate\View\Middleware\ShareErrorsFromSession',
+      'App\Http\Middleware\CorsMiddleware',
       //'Laravel\Lumen\Http\Middleware\VerifyCsrfToken',
  ]);
 
