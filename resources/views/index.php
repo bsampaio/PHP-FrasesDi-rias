@@ -54,11 +54,11 @@
 
 			$scope.randomize = function (id) {
         $scope.loadImage();
-        var url = "http://localhost:8000/rest/randomize";
+        var url = "http://guracle.herokuapp.com/rest/randomize";
         $scope.loading = true;
 
         if (typeof id != 'undefined') {
-          url = "http://localhost:8000/rest/randomize/"+id;
+          url = "http://guracle.herokuapp.com/rest/randomize/"+id;
         };
         $http.get(url)
           .success(function (response) {
@@ -73,8 +73,8 @@
       $scope.vote = function (id, vote){
         $scope.loading = true;
         switch (vote) {
-          case 'up'   : var url = 'http://localhost:8000/rest/up/'+id; break;
-          case 'down' : var url = 'http://localhost:8000/rest/down/'+id; break;
+          case 'up'   : var url = 'http://guracle.herokuapp.com/rest/up/'+id; break;
+          case 'down' : var url = 'http://guracle.herokuapp.com/rest/down/'+id; break;
           default     : break;
         }
         
@@ -96,8 +96,9 @@
       }
 
       $scope.loadImage = function(){
+        var randomId = new Date().getTime();
         $('body').css('background-image','none');
-        $('body').css('background-image','url(https://unsplash.it/'+$scope.img.width+'/'+$scope.img.height+'?random)');
+        $('body').css('background-image','url(https://unsplash.it/'+$scope.img.width+'/'+$scope.img.height+'?random='+randomId+')');
       }
 
       $scope.detectImgSize();
