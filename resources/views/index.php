@@ -127,7 +127,7 @@
       $scope.newQuote.author = null;
       $scope.newQuote.text = null;
 
-      $scope.save(newQuote){
+      $scope.save = function(newQuote){
         if (newQuote.author && newQuote.text) {
           $scope.loading = true;
             $http.post("http://guracle.herokuapp.com/rest/save",newQuote)
@@ -140,6 +140,9 @@
                 $scope.randomize();
                 $scope.loading = false;
               });
+        }else{
+          console.log('Error!');
+          console.log(newQuote);
         }
       }
 
@@ -215,21 +218,21 @@
             <div>
               <div class="row">
                 <div class="input-field col s6">
-                  <input id="author" name="author" type="text" class="validate">
+                  <input ng-model="newQuote.author" id="author" name="author" type="text" class="validate">
                   <label for="author">Author</label>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <textarea id="quote" name="text" class="materialize-textarea" length="140"></textarea>
+                  <textarea id="quote" ng-model="newQuote.text" name="text" class="materialize-textarea" length="140"></textarea>
                   <label for="quote">Quote</label>
                 </div>
               </div>
             </div>
           </div>
           <div class="modal-footer">
-            <a ng-click="new()" class="modal-action modal-close btn waves-effect waves-light right">
-              Confirm
+            <a ng-click="save(newQuote)" class="modal-action modal-close btn waves-effect waves-light right">
+              Save
               <i class="mdi-content-send right"></i>
             </a>
           </div>

@@ -22,6 +22,7 @@ function rest($path, $controller){
 	$app->get($path.'/randomize/{id}', $controller.'@randomize');
 	$app->post($path.'/up/{id}', $controller.'@up');
 	$app->post($path.'/down/{id}', $controller.'@up');
+	$app->post($path.'/save', $controller.'@save');
 }
 
 rest('/rest','App\Http\Controllers\QuotesControllerRest');
