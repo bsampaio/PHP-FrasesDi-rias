@@ -12,7 +12,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <style type="text/css">
     html, body, .container {
-      height: 100%
+      height: 100%;
+      overflow: hidden;
     }
     body {
       background-repeat: no-repeat;
