@@ -36,8 +36,7 @@ class QuotesController extends Controller{
 	}
 
 	public function home(){
-	    $quote = $this->getRandomQuote();
-	    return view('materialize', ['quote' => $quote]);
+	    return view('index');
 	}
 
 	public function save(Request $request){

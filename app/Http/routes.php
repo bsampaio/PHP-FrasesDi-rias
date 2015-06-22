@@ -15,14 +15,6 @@ use App\Models\Quote;
 
 $app->get('/', ['uses' => 'App\Http\Controllers\QuotesController@home','as' => 'home']);
 
-/**
- * Display a specific quote
- */
-$app->get('/view/{id}', function($id) use ($app) {
-    $quote = Quote::query()->findOrFail($id);
-    return view('quote', ['quote' => $quote]);
-});
-
 function rest($path, $controller){
 	global $app;
 
