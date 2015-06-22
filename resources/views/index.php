@@ -39,6 +39,77 @@
       font-size: 4.2em !important;
     }
   </style>
+  <style type="text/css">
+    #newQuote {
+      font-family: 'Roboto' !important;
+    }
+
+    .opacity-6 {
+      background-color: rgba(255,255,255,0.6);
+    }
+
+    span.character-counter,
+    input[type=text],
+    textarea.materialize-textarea,
+    h4 {
+      color: rgba(0,0,0,0.75);
+    }
+
+    textarea.materialize-textarea{
+      font-size: 2.5em;
+    }
+
+    /* label color */
+    .input-field label {
+      color: rgba(0,0,0,0.75);
+    }
+
+    /* label focus color */
+    .input-field input[type=text]:focus + label {
+      color: rgba(0,0,0,0.75);
+    }
+    /* label underline focus color */
+    .input-field input[type=text]:focus {
+      border-bottom: 1px solid rgba(0,0,0,0.75);
+      box-shadow: 0 1px 0 0 rgba(0,0,0,0.75) !important;
+    }
+    /* valid color */
+    .input-field input[type=text].valid {
+      border-bottom: 1px solid rgba(0,0,0,0.75);
+      box-shadow: 0 1px 0 0 rgba(0,0,0,0.75) !important;
+    }
+    /* invalid color */
+   .input-field textarea.materialize-textarea.invalid {
+      border-bottom: 1px solid #d9534f;
+      box-shadow: 0 1px 0 0 #d9534f !important;
+    }
+
+    /* label focus color */
+    .input-field textarea.materialize-textarea:focus + label {
+      color: rgba(0,0,0,0.75);
+    }
+
+    /* label underline focus color */
+    .input-field textarea.materialize-textarea:focus {
+      border-bottom: 1px solid rgba(0,0,0,0.75);
+      box-shadow: 0 1px 0 0 rgba(0,0,0,0.75) !important;
+    }
+    /* valid color */
+    .input-field textarea.materialize-textarea.valid {
+      border-bottom: 1px solid rgba(0,0,0,0.75);
+      box-shadow: 0 1px 0 0 rgba(0,0,0,0.75) !important;
+    }
+    /* invalid color */
+   .input-field textarea.materialize-textarea.invalid {
+      border-bottom: 1px solid  #d9534f;
+      box-shadow: 0 1px 0 0  #d9534f !important;
+    }
+
+    /* icon prefix focus color */
+    .input-field .prefix.active {
+      color: rgba(0,0,0,0.75);
+    }
+  </style>
 	<script type="text/javascript">
 		angular.module("Guracle",[]);
 		angular.module("Guracle").controller("QuotesController", function ($scope, $http){
@@ -51,6 +122,26 @@
       }
       $scope.loading = false;
       $scope.img = {};
+
+      $scope.newQuote = {};
+      $scope.newQuote.author = null;
+      $scope.newQuote.text = null;
+
+      $scope.save(newQuote){
+        if (newQuote.author && newQuote.text) {
+          $scope.loading = true;
+            $http.post("http://guracle.herokuapp.com/rest/save",newQuote)
+              .success(function (response){
+                $scope.randomize();
+                $scope.loading = false;
+              })
+              .error(function (response){
+                console.log(response);
+                $scope.randomize();
+                $scope.loading = false;
+              });
+        }
+      }
 
 			$scope.randomize = function (id) {
         $scope.loadImage();
@@ -116,6 +207,33 @@
         <div class="row">
           <h5 class="valign center" style="width: 100%">— {{quote.author}}</h5>
         </div>
+
+        <!-- Modal Structure -->
+        <div id="newQuote" class="modal modal-fixed-footer">
+          <div class="modal-content">
+            <h4>New Quote</h4>
+            <div>
+              <div class="row">
+                <div class="input-field col s6">
+                  <input id="author" name="author" type="text" class="validate">
+                  <label for="author">Author</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <textarea id="quote" name="text" class="materialize-textarea" length="140"></textarea>
+                  <label for="quote">Quote</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <a ng-click="new()" class="modal-action modal-close btn waves-effect waves-light right">
+              Confirm
+              <i class="mdi-content-send right"></i>
+            </a>
+          </div>
+        </div>
       </div>
       <div ng-show="loading" class="valign center" style="width: 100%">
         <div class="center preloader-wrapper big active">
@@ -178,7 +296,7 @@
         </a>
       </li>
       <li>
-        <a class="btn-floating blue tooltipped" style="transform: scaleY(0.4) scaleX(0.4) translateY(40px); opacity: 0;" data-position="left" data-delay="30" data-tooltip="New quote">
+        <a class="modal-trigger btn-floating blue tooltipped" href="#newQuote" style="transform: scaleY(0.4) scaleX(0.4) translateY(40px); opacity: 0;" data-position="left" data-delay="30" data-tooltip="New quote">
           <i class="large {{icons.quote}}"></i>
         </a>
       </li>
@@ -187,5 +305,11 @@
 	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<!-- Compiled and minified JavaScript -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+      $('.modal-trigger').leanModal();
+    });
+  </script>
 </body>
 </html>

@@ -38,19 +38,32 @@ class QuotesControllerRest extends Controller{
 
 	public function save(Request $request){
 		$validator = Validator::make($request->all(), [
-            'author' => 'required',
+            'author' => 'required|max:150|min:1',
             'text' => 'required|max:140|min:3',
 	    ]);
 
 	    if ($validator->fails()) {
-	            return redirect()->back()->withErrors($validator->errors());
+    		$response = [
+    			'code' => 500,
+    			'status' => 'Internal Server Error',
+    			'message' => 'Wrong parameters',
+    			'data' => $request
+    		];
+
+            return response()->json($response, $response['code']);
 	    }
 
 	    $quote = new Quote;
 	    $quote->author = $request->author;
 	    $quote->text = $request->text;
 	    $quote->save();
-	    return randomize($id);
+	    $response = [
+			'code' => 201,
+			'status' => 'success',
+			'message' => 'Vote computed, Thanks!'
+		];
+
+		return response()->json($response, $response['code']);
 	}
 
 	public function up($id){
